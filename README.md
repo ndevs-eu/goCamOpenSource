@@ -52,6 +52,7 @@ To run the project in production mode run:
 
 By default the project will run on `http://localhost:3300`. Due to the fact that this project requires access to some features that are restricted to https (e.g. webcam access), we recommend you running it on `localhost` on your first run.
 
+If you want to run the project behind a reverse proxy (e.g. nginx) you can set the `BEHIND_PROXY=1` environment variable in the `.env` file.
 ## Example implementation
 
 By running this project you will be able to go through both types of verification flows: using a redirect or a iframe overlay.

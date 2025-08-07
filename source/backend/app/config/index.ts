@@ -8,6 +8,7 @@ declare var process: {
 		HTTP_SERVER_PROTOCOL: string;
 		HTTP_SERVER_HOST: string;
 		HTTP_SERVER_PORT: number;
+		BEHIND_PROXY: number;
 		ENCRYPTION_KEY: string;
 		ENCRYPTION_ALGORITHM: string;
 		ENABLE_FRONTEND_DEBUG: boolean
@@ -16,9 +17,10 @@ declare var process: {
 
 const configObject = {
 
-	httpServerProtocol: process.env.HTTP_SERVER_PROTOCOL || 'http',
+	httpServerProtocol: process.env.BEHIND_PROXY === 1 ? 'https' : ( process.env.HTTP_SERVER_PROTOCOL || 'http' ),
 	httpServerHost    : process.env.HTTP_SERVER_HOST || 'localhost',
 	httpServerPort    : process.env.HTTP_SERVER_PORT || 3300,
+	behindProxy       : process.env.BEHIND_PROXY === 1,
 
 	htmlFilePath: './app/frontend/views/',
 

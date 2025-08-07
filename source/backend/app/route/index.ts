@@ -85,10 +85,22 @@ export function load(app: Express.Application, storage: AvsStorageSession) {
 			}
 		);
 
+		let protocol: string;
+
+		if (config.behindProxy === true) {
+			console.log('Behind proxy detected, using HTTPS protocol for URLs');
+			protocol = 'https';
+		} else{
+			console.log('Not behind proxy, using HTTP protocol for URLs');
+			protocol = config.httpServerProtocol || 'http';
+		}
+
+		console.log('protocol', protocol);
+
 		const urlToken       = {
-			protocol: config.httpServerProtocol,
+			protocol: protocol,
 			hostname: config.httpServerHost,
-			port    : config.httpServerPort,
+			port    : config.behindProxy ? null : config.httpServerPort,
 			pathname: testPathRedirect,
 			query   : {
 				d: requestPayload
@@ -97,15 +109,21 @@ export function load(app: Express.Application, storage: AvsStorageSession) {
 		const urlTokenString = url.format(urlToken);
 
 		const urlIframe       = {
-			protocol: config.httpServerProtocol,
+			protocol: protocol,
 			hostname: config.httpServerHost,
-			port    : config.httpServerPort,
+			port    : config.behindProxy ? null : config.httpServerPort,
 			pathname: testPathIframe,
 			query   : {
 				d: requestPayload
 			},
 		};
 		const urlIframeString = url.format(urlIframe);
+
+		console.log(
+			{			url      : urlTokenString,
+				iframeUrl: urlIframeString
+			}
+		)
 
 		res.send(AvsResponse.successResponse({
 			payload  : requestPayload,

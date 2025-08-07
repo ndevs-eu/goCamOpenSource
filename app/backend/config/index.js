@@ -8,9 +8,10 @@ const dotenv_1 = __importDefault(require("dotenv"));
 // Load the `.env` file
 dotenv_1.default.config({ quiet: true });
 const configObject = {
-    httpServerProtocol: process.env.HTTP_SERVER_PROTOCOL || 'http',
+    httpServerProtocol: process.env.BEHIND_PROXY === 1 ? 'https' : (process.env.HTTP_SERVER_PROTOCOL || 'http'),
     httpServerHost: process.env.HTTP_SERVER_HOST || 'localhost',
     httpServerPort: process.env.HTTP_SERVER_PORT || 3300,
+    behindProxy: process.env.BEHIND_PROXY === 1,
     htmlFilePath: './app/frontend/views/',
     encryption: {
         key: process.env.ENCRYPTION_KEY || 'zIkmW2zEgzlTLTRC5xeMbcOhHcE5sBHB',
