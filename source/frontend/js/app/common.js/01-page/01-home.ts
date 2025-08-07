@@ -264,7 +264,7 @@ namespace AvsHome {
 
 					case AvsFactoryIframeSdk.V1.Config.EVENT_ON_INITIAL_VERIFICATION_SUCCESS:
 
-						appendToLog('Verification already completed, delete the "isAgeVerified" cookie to retry');
+						appendToLog('Verification already completed');
 
 						Ajax.validateVerificationPayload({
 							verificationPayload: eventMessage.data.payload
@@ -276,7 +276,9 @@ namespace AvsHome {
 							},
 							(error: IErrorResponse) => {
 
-								triggerError(error);
+								appendToLog(error.msg);
+								appendToLog('Starting the verification process');
+								avsInstance.emit(AvsFactoryIframeSdk.V1.Config.EVENT_RESOURCE_PRELOAD);
 
 							}
 						);
@@ -335,7 +337,7 @@ namespace AvsHome {
 							},
 							(error: IErrorResponse) => {
 
-								triggerError(error);
+								appendToLog(error.msg);
 
 							}
 						);

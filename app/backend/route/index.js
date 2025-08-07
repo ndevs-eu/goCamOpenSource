@@ -1,13 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.load = void 0;
-const URL = require("url");
-const encryption_1 = require("../lib/encryption");
+exports.load = load;
+const node_fs_1 = __importDefault(require("node:fs"));
+const path_1 = __importDefault(require("path"));
+const url_1 = __importDefault(require("url"));
 const config_1 = require("../config");
+const encryption_1 = require("../lib/encryption");
 const response_1 = require("../lib/response");
 const session_1 = require("../storage/session");
-const fs = require('node:fs');
-const path = require('path');
 function load(app, storage) {
     app.use((req, res, next) => {
         next();
@@ -72,30 +75,42 @@ function load(app, storage) {
             callbackUrl: callbackUrl,
             creationTimestamp: creationTimestamp,
         });
+        let protocol = 'https';
+        let port = null;
+        if (!config_1.config.behindProxy) {
+            protocol = config_1.config.httpServerProtocol || 'http';
+            if (protocol === 'https') {
+                port = null;
+            }
+            else {
+                port = config_1.config.httpServerPort || 3300;
+            }
+        }
         const urlToken = {
-            protocol: config_1.config.httpServerProtocol,
+            protocol: protocol,
             hostname: config_1.config.httpServerHost,
-            port: config_1.config.httpServerPort,
+            port: port,
             pathname: testPathRedirect,
             query: {
                 d: requestPayload
             },
         };
-        const urlTokenString = URL.format(urlToken);
+        const urlTokenString = url_1.default.format(urlToken);
         const urlIframe = {
-            protocol: config_1.config.httpServerProtocol,
+            protocol: protocol,
             hostname: config_1.config.httpServerHost,
-            port: config_1.config.httpServerPort,
+            port: port,
             pathname: testPathIframe,
             query: {
                 d: requestPayload
             },
         };
-        const urlIframeString = URL.format(urlIframe);
+        const urlIframeString = url_1.default.format(urlIframe);
         res.send(response_1.AvsResponse.successResponse({
             payload: requestPayload,
             url: urlTokenString,
-            iframeUrl: urlIframeString
+            iframeUrl: urlIframeString,
+            debug: 1,
         }));
     });
     app.post('/validateVerificationPayload', (req, res) => {
@@ -119,7 +134,7 @@ function load(app, storage) {
     });
     app.post('/callback', (req, res) => {
         let responseString = JSON.stringify(req.body) + "\n";
-        fs.appendFile(path.join(__dirname, './../../../log/callback.log'), responseString, (err) => {
+        node_fs_1.default.appendFile(path_1.default.join(__dirname, './../../../log/callback.log'), responseString, (err) => {
             if (err) {
                 res.send(response_1.AvsResponse.errorResponse(30004, 'Callback file log error: ' + err.toString()));
                 return;
@@ -137,4 +152,3 @@ function load(app, storage) {
         res.send('404');
     });
 }
-exports.load = load;

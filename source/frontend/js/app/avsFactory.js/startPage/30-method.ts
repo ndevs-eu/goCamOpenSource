@@ -85,6 +85,10 @@ namespace AvsFactory {
 								border-color: ` + Avs.Helper.Common.hexToRgbA(Config.PARTNER_COLOR_CONFIG.body.button.background, 0.4) + `;
 							}
 							
+							#avsMainContainer .page .submitArea .button.isDisabled {
+								opacity: 0.5;
+							}
+							
 							#avsMainContainer .page .iconArea .iconItem.isSelected .iconImage,
 							#avsMainContainer .page .introIcon,
 							#avsMainContainer .page .introIcon.layoutRed,

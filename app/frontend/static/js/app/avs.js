@@ -6048,7 +6048,7 @@ var Avs;
                             },
                             "idRegionZoom": 2
                         }
-                    ]
+                    ],
                 }
             },
             "RO": {
@@ -15835,7 +15835,7 @@ var Avs;
                                 }
                             ]
                         }
-                    }
+                    },
                 }
             }
         };
@@ -15930,7 +15930,7 @@ var Avs;
                 this.debug.info('Trying to start the stream using resolution: ' + JSON.stringify(this.resolutionFallbackList[this.currentFallbackStep]));
                 var videoConstraints = {
                     width: { ideal: this.resolutionFallbackList[this.currentFallbackStep].width },
-                    height: { ideal: this.resolutionFallbackList[this.currentFallbackStep].height }
+                    height: { ideal: this.resolutionFallbackList[this.currentFallbackStep].height },
                 };
                 if (streamVideoInputDevice !== null) {
                     videoConstraints.deviceId = { exact: streamVideoInputDevice };
@@ -15940,7 +15940,7 @@ var Avs;
                     videoConstraints.facingMode = { exact: facingMode };
                 }
                 navigator.mediaDevices.getUserMedia({
-                    video: videoConstraints
+                    video: videoConstraints,
                 }).then(function (stream) {
                     _this.streamInstance = stream;
                     _this.videoElement.srcObject = stream;
@@ -16161,7 +16161,7 @@ var Avs;
                         "WA": 18,
                         "WI": 18,
                         "WV": 18,
-                        "WY": 18
+                        "WY": 18,
                     }
                 };
             };
@@ -16533,7 +16533,7 @@ var Avs;
                     for (var pluginName in this.config.plugin.Library[pluginCategory]) {
                         if (this.config.plugin.Library[pluginCategory].hasOwnProperty(pluginName)) {
                             this.plugin.Library[pluginCategory][pluginName] = new Avs.Plugin.Library[pluginCategory][pluginName](this.config.plugin.Library[pluginCategory][pluginName], this.event, {
-                                apiDataChannel: this.apiDataChannel
+                                apiDataChannel: this.apiDataChannel,
                             });
                         }
                     }
@@ -17101,7 +17101,7 @@ var Avs;
                             devices[device.kind].push({
                                 id: device.deviceId,
                                 label: device.label,
-                                "default": device.deviceId == 'default'
+                                default: device.deviceId == 'default'
                             });
                         }
                         return callback(devices);
@@ -17622,7 +17622,7 @@ var Avs;
                     width: positioning.width,
                     height: positioning.height,
                     top: positioning.top,
-                    left: positioning.left
+                    left: positioning.left,
                 });
             };
             return ElementPositionCalculator;
@@ -18900,7 +18900,7 @@ var Avs;
                     }
                     return this.show();
                 };
-                QrCode.QR_CODE_SIZE = 10;
+                QrCode.QR_CODE_SIZE = 15;
                 return QrCode;
             }(Handler.Common));
             Handler.QrCode = QrCode;
@@ -19820,7 +19820,7 @@ var Avs;
                             top: faceDetection.alignedRect._box.top,
                             left: faceDetection.alignedRect._box.left,
                             imageWidth: faceDetection.alignedRect._imageDims.width,
-                            imageHeight: faceDetection.alignedRect._imageDims.height
+                            imageHeight: faceDetection.alignedRect._imageDims.height,
                         };
                     };
                     FaceApi.DETECTOR_TYPE_SSD_MOBILE_NET_V1 = 'ssd_mobilenetv1';
@@ -19889,7 +19889,7 @@ var Avs;
                                 '09': 'sept',
                                 '10': 'oct',
                                 '11': 'nov',
-                                '12': 'déc'
+                                '12': 'déc',
                             },
                             _a[Tesseract.MONTH_NAME_LANGUAGE_EN] = {
                                 '01': 'jan',
@@ -19903,7 +19903,7 @@ var Avs;
                                 '09': 'sept',
                                 '10': 'oct',
                                 '11': 'nov',
-                                '12': 'dec'
+                                '12': 'dec',
                             },
                             _a[Tesseract.MONTH_NAME_LANGUAGE_BE] = {
                                 '01': 'jan',
@@ -19917,7 +19917,7 @@ var Avs;
                                 '09': 'sept',
                                 '10': 'oct',
                                 '11': 'nov',
-                                '12': 'dec'
+                                '12': 'dec',
                             },
                             _a[Tesseract.MONTH_NAME_LANGUAGE_NL] = {
                                 '01': 'jan',
@@ -19931,7 +19931,7 @@ var Avs;
                                 '09': 'sept',
                                 '10': 'oct',
                                 '11': 'nov',
-                                '12': 'dec'
+                                '12': 'dec',
                             },
                             _a[Tesseract.MONTH_NAME_LANGUAGE_EL] = {
                                 '01': 'ian',
@@ -19945,7 +19945,7 @@ var Avs;
                                 '09': 'sept',
                                 '10': 'okt',
                                 '11': 'noem',
-                                '12': 'dek'
+                                '12': 'dek',
                             },
                             _a);
                         // TODO: load the library on demand
@@ -19960,7 +19960,7 @@ var Avs;
                             corePath: _this.config.corePath,
                             cacheMethod: 'refresh',
                             logger: function (result) {
-                            }
+                            },
                         });
                         _this.videoElement = $(_this.config.videoElementSelector).get(0);
                         _this.workerLoaded = false;
@@ -20143,7 +20143,7 @@ var Avs;
                                 var scanIdPersonYears = Math.floor(((dateNow - dateFound) / 1000 / 3600 / 24 / 365.2425));
                                 cb({
                                     birthDate: dateFoundString,
-                                    age: scanIdPersonYears
+                                    age: scanIdPersonYears,
                                 });
                             }
                             else {
@@ -20222,12 +20222,12 @@ var Avs;
                         var _this = _super.call(this, config, event, api) || this;
                         _this.api = api;
                         _this.adapters = {
-                            webrtc: new Avs.Video.Webrtc(_this.config.webrtc, _this.event)
+                            webrtc: new Avs.Video.Webrtc(_this.config.webrtc, _this.event),
                         };
                         _this.config.webrtc.options.localVideo = _this.adapters.webrtc.getRootElement();
                         _this.config.webrtc.options.eventNamesPrefix = _this.config.webrtc.options.eventNamesPrefix || CameraSource.EVENT_NAME_PREFIX;
                         _this.datachannels = {
-                            webrtc: new Avs.DataChannel.Webrtc(_this.config.webrtc, _this.event, _this.api)
+                            webrtc: new Avs.DataChannel.Webrtc(_this.config.webrtc, _this.event, _this.api),
                         };
                         _this.currentAdapter = 'webrtc';
                         return _this;
@@ -24203,7 +24203,7 @@ var Avs;
                         visible: this.element.is(':visible'),
                         enabled: !this.element.attr('disabled'),
                         value: this.element.val(),
-                        name: this.element.find('option:selected').text()
+                        name: this.element.find('option:selected').text(),
                     };
                     this.states = entity.states.FaceApiTypeSelect;
                 };
@@ -24258,7 +24258,7 @@ var Avs;
                         visible: this.element.is(':visible'),
                         enabled: !this.element.attr('disabled'),
                         value: this.element.val(),
-                        name: this.element.find('option:selected').text()
+                        name: this.element.find('option:selected').text(),
                     };
                     this.states = entity.states.ScanIdAgeVerificationCountrySelect;
                 };
@@ -24313,7 +24313,7 @@ var Avs;
                         visible: this.element.is(':visible'),
                         enabled: !this.element.attr('disabled'),
                         value: this.element.val(),
-                        name: this.element.find('option:selected').text()
+                        name: this.element.find('option:selected').text(),
                     };
                     this.states = entity.states.ScanIdAgeVerificationDeviceSelect;
                 };
@@ -24368,7 +24368,7 @@ var Avs;
                         visible: this.element.is(':visible'),
                         enabled: !this.element.attr('disabled'),
                         value: this.element.val(),
-                        name: this.element.find('option:selected').text()
+                        name: this.element.find('option:selected').text(),
                     };
                     this.states = entity.states.ScanIdAgeVerificationStateSelect;
                 };
@@ -24423,7 +24423,7 @@ var Avs;
                         visible: this.element.is(':visible'),
                         enabled: !this.element.attr('disabled'),
                         value: this.element.val(),
-                        name: this.element.find('option:selected').text()
+                        name: this.element.find('option:selected').text(),
                     };
                     this.states = entity.states.ScanIdAgeVerificationTypeSelect;
                 };
@@ -24478,7 +24478,7 @@ var Avs;
                         visible: this.element.is(':visible'),
                         enabled: !this.element.attr('disabled'),
                         value: this.element.val(),
-                        name: this.element.find('option:selected').text()
+                        name: this.element.find('option:selected').text(),
                     };
                     this.states = entity.states.SelfieAgeDetectionDeviceSelect;
                 };
@@ -24533,7 +24533,7 @@ var Avs;
                         visible: this.element.is(':visible'),
                         enabled: !this.element.attr('disabled'),
                         value: this.element.val(),
-                        name: this.element.find('option:selected').text()
+                        name: this.element.find('option:selected').text(),
                     };
                     this.states = entity.states.TesseractTypeSelect;
                 };
@@ -24588,7 +24588,7 @@ var Avs;
                         visible: this.element.is(':visible'),
                         enabled: !this.element.attr('disabled'),
                         value: this.element.val(),
-                        name: this.element.find('option:selected').text()
+                        name: this.element.find('option:selected').text(),
                     };
                     this.states = entity.states.VerificationTypeSelect;
                 };

@@ -676,7 +676,7 @@ var AvsHome;
                     colorConfigButtonBackgroundInput: colorConfigButtonBackgroundInput.val().toString(),
                     colorConfigButtonForegroundInput: colorConfigButtonForegroundInput.val().toString(),
                     colorConfigButtonForegroundCTAInput: colorConfigButtonForegroundCTAInput.val().toString(),
-                    callbackUrl: accessInformationCallbackUrlInput.val()
+                    callbackUrl: accessInformationCallbackUrlInput.val(),
                 };
                 Ajax.getVerificationPayloadAndUrl(postData).then(function (data) {
                     exampleImplementationStartRedirectButton.removeAttr('disabled');
@@ -698,7 +698,7 @@ var AvsHome;
                     colorConfigButtonBackgroundInput: colorConfigButtonBackgroundInput.val().toString(),
                     colorConfigButtonForegroundInput: colorConfigButtonForegroundInput.val().toString(),
                     colorConfigButtonForegroundCTAInput: colorConfigButtonForegroundCTAInput.val().toString(),
-                    callbackUrl: accessInformationCallbackUrlInput.val()
+                    callbackUrl: accessInformationCallbackUrlInput.val(),
                 };
                 Ajax.getVerificationPayloadAndUrl(postData).then(function (data) {
                     iframeAvsHandler(data.iframeUrl);
@@ -759,13 +759,15 @@ var AvsHome;
                         avsInstance.emit(AvsFactoryIframeSdk.V1.Config.EVENT_STATUS_REQUEST);
                         break;
                     case AvsFactoryIframeSdk.V1.Config.EVENT_ON_INITIAL_VERIFICATION_SUCCESS:
-                        appendToLog('Verification already completed, delete the "isAgeVerified" cookie to retry');
+                        appendToLog('Verification already completed');
                         Ajax.validateVerificationPayload({
                             verificationPayload: eventMessage.data.payload
                         }).then(function (data) {
                             appendToLog('Cookie payload integrity check success, verification session id: ' + data.sessionId);
                         }, function (error) {
-                            triggerError(error);
+                            appendToLog(error.msg);
+                            appendToLog('Starting the verification process');
+                            avsInstance.emit(AvsFactoryIframeSdk.V1.Config.EVENT_RESOURCE_PRELOAD);
                         });
                         break;
                     case AvsFactoryIframeSdk.V1.Config.EVENT_ON_INITIAL_VERIFICATION_NOT_FOUND:
@@ -795,7 +797,7 @@ var AvsHome;
                         }).then(function (data) {
                             appendToLog('Cookie payload integrity check success, verification session id: ' + data.sessionId);
                         }, function (error) {
-                            triggerError(error);
+                            appendToLog(error.msg);
                         });
                         break;
                     case AvsFactoryIframeSdk.V1.Config.EVENT_ON_VERIFICATION_ERROR:
@@ -833,7 +835,7 @@ var AvsToken;
             partnerId: Application.p,
             payload: Application.d,
             sessionId: Application.sessionId,
-            partnerColorConfig: Application.partnerColorConfig
+            partnerColorConfig: Application.partnerColorConfig,
         });
         AvsFactory.StartPage.init();
     }

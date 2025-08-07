@@ -35,7 +35,7 @@ namespace AvsFactory {
 			public static EVENT_NAME_PREFIX = 'selfieAgeDetectionPage';
 
 			public static MAX_FACE_DISTANCE_TO_MATCH = 0.5;
-			public static MIN_VALID_FACE_MATCH       = 1;
+			public static MIN_VALID_FACE_MATCH       = 2;
 
 			public static BOUNDARY_TOP    = 40;
 			public static BOUNDARY_BOTTOM = 40;

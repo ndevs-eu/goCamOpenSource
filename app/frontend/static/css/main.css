@@ -600,7 +600,7 @@ a {
   text-decoration: none;
 }
 #avsMainContainer .page .qrCodeArea {
-  padding: 10px 0;
+  padding: 0;
 }
 #avsMainContainer .page .videoOverlay {
   position: fixed;

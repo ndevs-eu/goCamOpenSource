@@ -61,9 +61,7 @@ var AvsFactoryIframeSdk;
                         case V1.Config.EVENT_ON_CHECK_IFRAME_LOADED:
                             break;
                         case V1.Config.EVENT_ON_INITIAL_VERIFICATION_SUCCESS:
-                            if (eventMessage.data.status) {
-                                _this.iframeInstance.destroy();
-                            }
+                            //
                             break;
                         case V1.Config.EVENT_ON_INITIAL_VERIFICATION_NOT_FOUND:
                             //
@@ -129,7 +127,7 @@ var AvsFactoryIframeSdk;
                 this.iframeElement.style.position = 'fixed';
                 this.iframeElement.style.top = '0';
                 this.iframeElement.style.left = '0';
-                this.iframeElement.allow = 'camera http://localhost:3300';
+                this.iframeElement.allow = 'camera https://' + this.iframeLocationHostname;
                 document.body.appendChild(this.iframeElement);
             };
             IframeHandler.prototype.destroy = function () {

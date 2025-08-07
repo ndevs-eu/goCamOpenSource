@@ -1,10 +1,9 @@
-import Express = require('express');
-import {config}            from '../config';
-import {AvsEncryption}     from '../lib/encryption';
-import {AvsRandom}         from '../lib/random';
-import {AvsStorageSession} from "../storage/session";
-
-const uaParser = require('ua-parser-js');
+import Express from 'express';
+import uaParser from 'ua-parser-js';
+import { config } from '../config';
+import { AvsEncryption } from '../lib/encryption';
+import { AvsRandom } from '../lib/random';
+import { AvsStorageSession } from "../storage/session";
 
 const ROUTE_ROOT = '/token';
 
