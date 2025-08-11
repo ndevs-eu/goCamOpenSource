@@ -24,8 +24,7 @@ declare module 'express-session' {
 
 const avsStorageInstance = new AvsStorageSession();
 
-const useSecureCookies = !!config.behindProxy; // we're behind HTTPS proxy
-const sameSitePolicy: 'lax' | 'none' = useSecureCookies ? 'none' : 'lax';
+
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());

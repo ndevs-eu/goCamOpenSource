@@ -83,6 +83,7 @@ export function load(app: Express.Application, storage: AvsStorageSession) {
 			httpOnly: config.cookie.httpOnly,
 			secure  : config.cookie.secure,
 			maxAge  : config.cookie.maxAge,
+			sameSite: 'none',
 		});
 
 		res.send(AvsResponse.successResponse({
