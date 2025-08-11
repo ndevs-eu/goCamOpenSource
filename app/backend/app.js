@@ -51,7 +51,7 @@ const indexRoute = __importStar(require("./route"));
 const resultRoute = __importStar(require("./route/result"));
 const tokenRoute = __importStar(require("./route/token"));
 const app = (0, express_1.default)();
-app.set('trust proxy', config_1.config.behindProxy ? 1 : 0);
+app.set('trust proxy', 1);
 const avsStorageInstance = new session_1.AvsStorageSession();
 const useSecureCookies = !!config_1.config.behindProxy; // we're behind HTTPS proxy
 const sameSitePolicy = useSecureCookies ? 'none' : 'lax';
@@ -62,9 +62,9 @@ app.use((0, express_session_1.default)({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: useSecureCookies,
+        secure: true,
         httpOnly: true,
-        sameSite: sameSitePolicy
+        sameSite: 'none'
     }
 }));
 app.use(express_1.default.static('app/frontend'));
