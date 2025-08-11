@@ -15,6 +15,7 @@ import * as resultRoute from './route/result';
 import * as tokenRoute  from './route/token';
 
 const app = express();
+app.set('trust proxy', config.behindProxy ? 1 : 0);
 declare module 'express-session' {
 	export interface SessionData {
 		[key: string]: any;
@@ -23,14 +24,19 @@ declare module 'express-session' {
 
 const avsStorageInstance = new AvsStorageSession();
 
+const useSecureCookies = !!config.behindProxy; // we're behind HTTPS proxy
+const sameSitePolicy: 'lax' | 'none' = useSecureCookies ? 'none' : 'lax';
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({
-	secret           : AvsRandom.generateRandomString(),
+	secret           : process.env.SESSION_SECRET || AvsRandom.generateRandomString(),
 	resave           : false,
-	saveUninitialized: true,
+	saveUninitialized: false,
 	cookie           : {
-		secure: false
+		secure  : useSecureCookies,
+		httpOnly: true,
+		sameSite: sameSitePolicy
 	}
 }));
 app.use(express.static('app/frontend'));
