@@ -51,15 +51,20 @@ const indexRoute = __importStar(require("./route"));
 const resultRoute = __importStar(require("./route/result"));
 const tokenRoute = __importStar(require("./route/token"));
 const app = (0, express_1.default)();
+app.set('trust proxy', config_1.config.behindProxy ? 1 : 0);
 const avsStorageInstance = new session_1.AvsStorageSession();
+const useSecureCookies = !!config_1.config.behindProxy; // we're behind HTTPS proxy
+const sameSitePolicy = useSecureCookies ? 'none' : 'lax';
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, express_session_1.default)({
-    secret: random_1.AvsRandom.generateRandomString(),
+    secret: process.env.SESSION_SECRET || random_1.AvsRandom.generateRandomString(),
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        secure: false
+        secure: useSecureCookies,
+        httpOnly: true,
+        sameSite: sameSitePolicy
     }
 }));
 app.use(express_1.default.static('app/frontend'));

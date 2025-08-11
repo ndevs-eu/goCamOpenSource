@@ -79,12 +79,7 @@ function load(app, storage) {
         let port = null;
         if (!config_1.config.behindProxy) {
             protocol = config_1.config.httpServerProtocol || 'http';
-            if (protocol === 'https') {
-                port = null;
-            }
-            else {
-                port = config_1.config.httpServerPort || 3300;
-            }
+            port = (protocol === 'https') ? null : config_1.config.httpServerPort;
         }
         const urlToken = {
             protocol: protocol,
