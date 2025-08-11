@@ -62,6 +62,7 @@ function load(app, storage) {
             httpOnly: config_1.config.cookie.httpOnly,
             secure: config_1.config.cookie.secure,
             maxAge: config_1.config.cookie.maxAge,
+            sameSite: 'none',
         });
         res.send(response_1.AvsResponse.successResponse({
             successPayload: successPayload,

@@ -53,8 +53,6 @@ const tokenRoute = __importStar(require("./route/token"));
 const app = (0, express_1.default)();
 app.set('trust proxy', 1);
 const avsStorageInstance = new session_1.AvsStorageSession();
-const useSecureCookies = !!config_1.config.behindProxy; // we're behind HTTPS proxy
-const sameSitePolicy = useSecureCookies ? 'none' : 'lax';
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, express_session_1.default)({
