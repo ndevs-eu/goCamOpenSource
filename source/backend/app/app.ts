@@ -15,7 +15,7 @@ import * as resultRoute from './route/result';
 import * as tokenRoute  from './route/token';
 
 const app = express();
-app.set('trust proxy', config.behindProxy ? 1 : 0);
+app.set('trust proxy', 1);
 declare module 'express-session' {
 	export interface SessionData {
 		[key: string]: any;
@@ -34,9 +34,9 @@ app.use(session({
 	resave           : false,
 	saveUninitialized: false,
 	cookie           : {
-		secure  : useSecureCookies,
+		secure  : true,
 		httpOnly: true,
-		sameSite: sameSitePolicy
+		sameSite: 'none'
 	}
 }));
 app.use(express.static('app/frontend'));
