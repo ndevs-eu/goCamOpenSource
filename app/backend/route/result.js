@@ -10,6 +10,8 @@ const DEVICE_LOCATION_VERIFICATION_INTERNAL = 0;
 // const DEVICE_LOCATION_VERIFICATION_EXTERNAL = 1;
 function load(app, storage) {
     app.post(ROUTE_ROOT + '/success', (req, res) => {
+        var _a;
+        req.session.accessTime = (_a = req.session.accessTime) !== null && _a !== void 0 ? _a : Date.now();
         let token = req.body.token;
         let stepId = req.body.stepId;
         let deviceLocationVerification = req.body.deviceLocationVerification;
@@ -69,6 +71,8 @@ function load(app, storage) {
         }));
     });
     app.post(ROUTE_ROOT + '/fail', (req, res) => {
+        var _a;
+        req.session.accessTime = (_a = req.session.accessTime) !== null && _a !== void 0 ? _a : Date.now();
         let token = req.body.token;
         let stepId = req.body.stepId;
         let deviceLocationVerification = req.body.deviceLocationVerification;
@@ -125,8 +129,19 @@ function load(app, storage) {
             isValidated: storage.isPayloadValidated(payload),
         }));
     });
-    let isMaxAllowedTestTime = (req) => {
-        let delta = +new Date() - req.session.accessTime;
-        return delta < MAX_TEST_DURATION;
+    const isMaxAllowedTestTime = (req) => {
+        const now = Date.now();
+        // když nemáme session nebo accessTime, inicializuj a dovol pokračovat
+        if (!req.session || typeof req.session.accessTime !== 'number' || !Number.isFinite(req.session.accessTime)) {
+            if (req.session)
+                req.session.accessTime = now;
+            return true;
+        }
+        const delta = now - req.session.accessTime;
+        if (!Number.isFinite(delta) || delta < 0) {
+            req.session.accessTime = now;
+            return true;
+        }
+        return delta < MAX_TEST_DURATION; // v ms
     };
 }

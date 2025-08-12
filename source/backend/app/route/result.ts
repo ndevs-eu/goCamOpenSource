@@ -12,7 +12,7 @@ const DEVICE_LOCATION_VERIFICATION_INTERNAL = 0;
 export function load(app: Express.Application, storage: AvsStorageSession) {
 
 	app.post(ROUTE_ROOT + '/success', (req: Express.Request, res: Express.Response) => {
-
+		req.session.accessTime = req.session.accessTime ?? Date.now();
 		let token                      = req.body.token;
 		let stepId                     = req.body.stepId;
 		let deviceLocationVerification = req.body.deviceLocationVerification;
@@ -93,6 +93,7 @@ export function load(app: Express.Application, storage: AvsStorageSession) {
 	});
 
 	app.post(ROUTE_ROOT + '/fail', (req: Express.Request, res: Express.Response) => {
+		req.session.accessTime = req.session.accessTime ?? Date.now();
 
 		let token                      = req.body.token;
 		let stepId                     = req.body.stepId;
@@ -172,10 +173,20 @@ export function load(app: Express.Application, storage: AvsStorageSession) {
 
 	});
 
-	let isMaxAllowedTestTime = (req: Express.Request) => {
+	const isMaxAllowedTestTime = (req: Express.Request) => {
+		const now = Date.now();
 
-		let delta = +new Date() - req.session.accessTime;
-		return delta < MAX_TEST_DURATION;
-	}
+		// když nemáme session nebo accessTime, inicializuj a dovol pokračovat
+		if (!req.session || typeof req.session.accessTime !== 'number' || !Number.isFinite(req.session.accessTime)) {
+			if (req.session) req.session.accessTime = now;
+			return true;
+		}
 
+		const delta = now - req.session.accessTime;
+		if (!Number.isFinite(delta) || delta < 0) {
+			req.session.accessTime = now;
+			return true;
+		}
+		return delta < MAX_TEST_DURATION; // v ms
+	};
 }
