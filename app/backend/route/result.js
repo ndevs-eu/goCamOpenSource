@@ -10,8 +10,6 @@ const DEVICE_LOCATION_VERIFICATION_INTERNAL = 0;
 // const DEVICE_LOCATION_VERIFICATION_EXTERNAL = 1;
 function load(app, storage) {
     app.post(ROUTE_ROOT + '/success', (req, res) => {
-        var _a;
-        req.session.accessTime = (_a = req.session.accessTime) !== null && _a !== void 0 ? _a : Date.now();
         let token = req.body.token;
         let stepId = req.body.stepId;
         let deviceLocationVerification = req.body.deviceLocationVerification;
@@ -71,8 +69,6 @@ function load(app, storage) {
         }));
     });
     app.post(ROUTE_ROOT + '/fail', (req, res) => {
-        var _a;
-        req.session.accessTime = (_a = req.session.accessTime) !== null && _a !== void 0 ? _a : Date.now();
         let token = req.body.token;
         let stepId = req.body.stepId;
         let deviceLocationVerification = req.body.deviceLocationVerification;

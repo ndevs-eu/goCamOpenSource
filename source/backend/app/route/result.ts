@@ -6,13 +6,12 @@ import { AvsStorageSession } from "../storage/session";
 const ROUTE_ROOT: string = '/result';
 
 const MAX_TEST_DURATION: number             = config.test.maxDuration;
-const DEVICE_LOCATION_VERIFICATION_INTERNAL = 1;
+const DEVICE_LOCATION_VERIFICATION_INTERNAL = 0;
 // const DEVICE_LOCATION_VERIFICATION_EXTERNAL = 1;
 
 export function load(app: Express.Application, storage: AvsStorageSession) {
 
 	app.post(ROUTE_ROOT + '/success', (req: Express.Request, res: Express.Response) => {
-		req.session.accessTime = req.session.accessTime ?? Date.now();
 		let token                      = req.body.token;
 		let stepId                     = req.body.stepId;
 		let deviceLocationVerification = req.body.deviceLocationVerification;
@@ -93,7 +92,6 @@ export function load(app: Express.Application, storage: AvsStorageSession) {
 	});
 
 	app.post(ROUTE_ROOT + '/fail', (req: Express.Request, res: Express.Response) => {
-		req.session.accessTime = req.session.accessTime ?? Date.now();
 
 		let token                      = req.body.token;
 		let stepId                     = req.body.stepId;
