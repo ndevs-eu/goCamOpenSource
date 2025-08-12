@@ -6,7 +6,7 @@ import { AvsStorageSession } from "../storage/session";
 const ROUTE_ROOT: string = '/result';
 
 const MAX_TEST_DURATION: number             = config.test.maxDuration;
-const DEVICE_LOCATION_VERIFICATION_INTERNAL = 0;
+const DEVICE_LOCATION_VERIFICATION_INTERNAL = 1;
 // const DEVICE_LOCATION_VERIFICATION_EXTERNAL = 1;
 
 export function load(app: Express.Application, storage: AvsStorageSession) {
